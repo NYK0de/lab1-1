@@ -42,6 +42,10 @@ class MainActivity : ListActivity() {
                     PERMISSION_REQUEST_READ_SMS
             )
         }
+
+        // step 4: fixing problems in layout.xml to show sms. Each Textview is showed above others
+
+
     }
 
     object SmsColumns {
