@@ -1,15 +1,20 @@
 package com.curso.labs.readsms
 
+import android.Manifest
 import android.app.ListActivity
 import android.content.Context
+import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Adapter
 import android.widget.CursorAdapter
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 
 class MainActivity : ListActivity() {
 
@@ -20,7 +25,23 @@ class MainActivity : ListActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //setContentView(R.layout.activity_main)
-        readSMS()
+
+        // Step 2: Check for permissions
+        val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
+        //val permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_CALENDAR)
+
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            Log.v("PERM-EXISTS", "El permiso ha sido dado antes")
+            readSMS()
+        }
+        else{
+            Log.v("PERM-EXISTS", "Pediremos al usuario que asigne el permiso")
+            ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_SMS),
+                    PERMISSION_REQUEST_READ_SMS
+            )
+        }
     }
 
     object SmsColumns {
@@ -65,4 +86,23 @@ class MainActivity : ListActivity() {
     // at this point, the application won't run. There is an error, we need to check if the user has granted
     // the intented permission and request for permission in case it is required
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when (requestCode){
+            PERMISSION_REQUEST_READ_SMS -> {
+                // if request is cancelled, the result arrays are empty.
+                if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    // Permission was granted
+                    Log.v("PERM-EXISTS", "El permiso brindado por el usuario")
+                    readSMS()
+                }
+                else{
+                    // Permission denied, you can't access to SMS
+                    Log.v("PERM-EXISTS", "No Fue Dado")
+                }
+                return
+            }
+        }
+    }
 }
