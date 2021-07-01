@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_margin="8dp"
     tools:context=".MainActivity">
 
     <TextView
         android:id="@+id/smsOrigin"
-        android:layout_width="80dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:text="@string/origin"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,9 +27,10 @@
         app:layout_constraintStart_toEndOf="@+id/smsOrigin"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/smsDate"
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:text="@string/message_date"
         app:layout_constraintEnd_toEndOf="parent"
