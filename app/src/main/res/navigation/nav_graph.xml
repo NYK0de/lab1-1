@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/SMSFragment">
+
+
+
+    <fragment android:id="@+id/placeholder" />
+    <fragment android:id="@+id/placeholder2" />
+    <fragment
+        android:id="@+id/SMSFragment"
+        android:name="com.curso.labs.readsms.fragment.SMSFragment"
+        android:label="SMSFragment" />
+    <fragment
+        android:id="@+id/fragment2"
+        android:name="com.curso.labs.readsms.Fragment2"
+        android:label="fragment_2"
+        tools:layout="@layout/fragment_2" />
+</navigation>

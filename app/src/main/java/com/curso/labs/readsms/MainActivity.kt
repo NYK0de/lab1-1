@@ -48,30 +48,6 @@ class MainActivity : ListActivity() {
 
     }
 
-    object SmsColumns {
-        val ID = "_id"
-        val ADDRESS = "address"
-        val DATE = "date"
-        val BODY = "body"
-    }
-
-    private inner class SmsCursorAdapter(
-        context: Context,
-        c: Cursor,
-        autoRequery: Boolean
-    ): CursorAdapter(context, c, autoRequery){
-
-        override fun newView(context: Context?, cursor: Cursor?, viewGroup: ViewGroup?): View {
-            return View.inflate(context, R.layout.activity_main, null)
-        }
-
-        override fun bindView(view: View?, context: Context?, cursor: Cursor?) {
-            view?.findViewById<TextView>(R.id.smsOrigin)?.text = cursor?.getString(cursor.getColumnIndexOrThrow(SmsColumns.ADDRESS))
-            view?.findViewById<TextView>(R.id.smsBody)?.text = cursor?.getString(cursor.getColumnIndexOrThrow(SmsColumns.BODY))
-            view?.findViewById<TextView>(R.id.smsDate)?.text = cursor?.getString(cursor.getColumnIndexOrThrow(SmsColumns.DATE))
-        }
-    }
-
     private fun readSMS() {
         val cursor = contentResolver.query(SMS,
                 arrayOf(
@@ -108,5 +84,28 @@ class MainActivity : ListActivity() {
                 return
             }
         }
+    }
+
+    private inner class SmsCursorAdapter(
+        context: Context,
+        c: Cursor,
+        autoRequery: Boolean
+    ): CursorAdapter(context, c, autoRequery){
+
+        override fun newView(context: Context?, cursor: Cursor?, viewGroup: ViewGroup?): View {
+            return View.inflate(context, R.layout.activity_main, null)
+        }
+
+        override fun bindView(view: View?, context: Context?, cursor: Cursor?) {
+            view?.findViewById<TextView>(R.id.smsOrigin)?.text = cursor?.getString(cursor.getColumnIndexOrThrow(SmsColumns.ADDRESS))
+            view?.findViewById<TextView>(R.id.smsBody)?.text = cursor?.getString(cursor.getColumnIndexOrThrow(SmsColumns.BODY))
+            view?.findViewById<TextView>(R.id.smsDate)?.text = cursor?.getString(cursor.getColumnIndexOrThrow(SmsColumns.DATE))
+        }
+    }
+    object SmsColumns {
+        val ID = "_id"
+        val ADDRESS = "address"
+        val DATE = "date"
+        val BODY = "body"
     }
 }
